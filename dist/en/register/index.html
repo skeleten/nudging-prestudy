@@ -3,7 +3,7 @@
 	<meta charset="UTF-8">
 	<title>NudgeFlix Registration</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-	<link rel="stylesheet" type="text/css" href="/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../../css/form.css">
 	<!--script type="text/javascript" src="/script/zxcvbn.js" ></script-->
 	<!-- <\!-- hack because ts bugs -\-> -->
 	<!-- <script>var exports={};</script> -->
@@ -63,6 +63,10 @@
 		<div class="inp_group">
 			<label for="psw">Password</label>
 			<input type="password" placeholder="Enter Password" name="inp" id="psw" maxlength="128" required>
+			<div class="info" id="pw-warn-box" style="display: none;">
+				<i id="pw-warn" class="far fa-square fa-check-square" style="display: flex; justify-content: flex-start; margin: auto 10px auto 0; color: #ffffff;"></i>
+				<p>This password has been rated as insecure. By checking this box, you acknowledge the risks a weak password poses to your account security.</p>
+			</div>
 			<div style="display: flex;">
 				<small style="display: inline-block;" class="warning_label" id="psw_info"><b></b></small>
 				<div style="margin: 0 5px 5px 20px; display: flex; justify-content: flex-end;" id="pw-buttons">

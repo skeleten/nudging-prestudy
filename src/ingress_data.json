@@ -12,3 +12,9 @@
 {"metrics":{"length":17,"classes":{"lower":17,"capital":0,"digit":0,"symbol":0},"guesses":23128000010000,"score":4,"hash":"320ac1fdf024412db49a1b21fafa37a5211721fcfe715cbef8f10a7187a54c84"}}
 {"username":"a","mail":"@","metrics":{"length":109,"classes":{"lower":67,"capital":3,"digit":0,"symbol":39},"guesses":9.553747505702399e+83,"score":4,"hash":"f6b3b6f4a041a961ca5402034d6ae5318113113f118ec7dd580f9fd1e8a68fba"}}
 {"username":"a","mail":"@"}
+{"nudge_id":-1,"username":"YQ==","mail":"QA==","metrics":{"length":52,"classes":{"lower":34,"capital":9,"digit":0,"symbol":9},"guesses":1.0805073843019476e+43,"score":4,"hash":"a710e4e593701a43b0daa7d762ec3b9d3aa9fd7629fc9376c6bd519c0cf454f7"}}
+{"nudge_id":-1,"username":"YQ==","mail":"QOKZqw==","metrics":{"length":41,"classes":{"lower":32,"capital":1,"digit":0,"symbol":8},"guesses":1.68816e+40,"score":4,"hash":"3041a6ea646f5d9ac3056f181e6acd7e1bb131d45ba79bb8e941a04184e2f7e6"}}
+{"nudge_id":9,"username":"YQ==","mail":"QA==","metrics":{"length":8,"classes":{"lower":8,"capital":0,"digit":0,"symbol":0},"guesses":11100,"score":1,"hash":"926fb15b032f6fd5dda1ec0c788ffe4436fc7ff77dd0217a6160f128cc69443e"}}
+{"nudge_id":9,"username":"YQ==","mail":"QA==","metrics":{"length":52,"classes":{"lower":40,"capital":3,"digit":0,"symbol":9},"guesses":1.4778605099212415e+41,"score":4,"hash":"1903a642e41434a782d855451f9abefa9da1a71a4a2456d74eaf0e71df4af17b"}}
+{"nudge_id":9,"username":"YQ==","mail":"QA==","metrics":{"length":8,"classes":{"lower":0,"capital":0,"digit":8,"symbol":0},"guesses":4,"score":0,"hash":"ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f"}}
+{"nudge_id":9,"username":"YQ==","mail":"YUBhLmRl","metrics":{"length":8,"classes":{"lower":8,"capital":0,"digit":0,"symbol":0},"blacklisted":false,"guesses":100000001,"score":2,"hash":"3d27b531494859c9a028d1a68f6d97802497ddd99576e9ea38512a0f62294d42"}}

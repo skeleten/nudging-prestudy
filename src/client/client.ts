@@ -10,9 +10,11 @@ class App {
 	password: HTMLInputElement;
 	show_password: HTMLInputElement;
 	clear_password: HTMLInputElement;
+	ackn_password: HTMLInputElement;
 	password_repeat: HTMLInputElement;
 
 	password_hidden: boolean;
+	password_acknowledged: boolean;
 
 	constructor() {
 		window.onload = () => this.init();
@@ -26,6 +28,7 @@ class App {
 		this.password = <HTMLInputElement> document.getElementById('psw');
 		this.show_password = <HTMLInputElement> document.getElementById('pw-show');
 		this.clear_password = <HTMLInputElement> document.getElementById('pw-clear');
+		this.ackn_password = <HTMLInputElement> document.getElementById('pw-warn');
 		this.password_repeat = <HTMLInputElement> document.getElementById('psw-repeat');
 
 		this.mail.oninput = () => this.checkMail(this.mail.value);
@@ -40,8 +43,14 @@ class App {
 		this.clear_password.onclick = () => {
 			this.password.value = "";
 			this.password_repeat.value = "";
+			this.password.oninput(null);
+			this.password_repeat.oninput(null);
 			(<HTMLTextAreaElement> document.getElementById('psw_info')).innerHTML = '';
 			(<HTMLTextAreaElement> document.getElementById('psw_rpt_info')).style.display = 'none';
+		};
+		this.ackn_password.onclick = () => {
+			this.ackn_password.classList.toggle("fa-square");
+			this.password_acknowledged = !this.password_acknowledged;
 		};
 
 		this.password_repeat.oninput = () => this.checkPWConfirm(this.password_repeat.value, this.password.value);
@@ -50,7 +59,7 @@ class App {
 		let btn = document.getElementById('submit_btn');
 		btn.onclick = () => {
 			// Check constraints and store result in all_valid
-			this.all_valid = true;
+			this.all_valid = document.getElementById('pw-warn-box').style.display == 'none' || this.password_acknowledged;
 			this.mail.oninput(null);
 			this.username.oninput(null);
 			this.password.oninput(null);
@@ -78,6 +87,7 @@ class App {
 		}
 
 		this.password_hidden = true;
+		this.password_acknowledged = false;
 	}
 
 	submitOnEnter(e: KeyboardEvent) {
@@ -121,6 +131,9 @@ class App {
 				suggestion = 'A lot of people use this password, please choose another one';
 				valid = false;
 			}
+			let score: number = get_fast_metrics(value).score;
+			document.getElementById('pw-warn-box').style.display = score > 2 || !valid ? 'none' : 'flex';
+			if (score < 3 && this.password_acknowledged) this.ackn_password.onclick(null);
 		}
 		let warning = (<HTMLTextAreaElement> document.getElementById('psw_info'));
 		warning.style.color = !valid ? '#e31400' : '#18d546';
@@ -145,13 +158,14 @@ class App {
 		let payload =
 			{
 				// TODO timings
-				nudge_id: -1,
+				nudge_id: 5,
 				username: username_enc,
 				mail: mail_enc,
 				metrics: get_full_metrics(this.password.value),
 			};
-		this.saveMethod.save(payload);
-		window.location.href = "/en/success";
+		this.saveMethod.save(payload, () => {
+			window.location.href = "../success";
+		});
 	}
 }
 

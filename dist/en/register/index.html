@@ -3,7 +3,7 @@
 	<meta charset="UTF-8">
 	<title>NudgeFlix Registration</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-	<link rel="stylesheet" type="text/css" href="/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../../css/form.css">
 	<!--script type="text/javascript" src="/script/zxcvbn.js" ></script-->
 	<!-- <\!-- hack because ts bugs -\-> -->
 	<!-- <script>var exports={};</script> -->
@@ -54,6 +54,39 @@
 			<small class="warning_label" id="mail_info"><b>Error.</b></small>
 		</div>
 
+		<div style="position: absolute; right: 0; width: 30%; margin: 0; padding: 1em;">
+			<div class="modal-content" style="margin: auto; width: fit-content; width: -moz-fit-content; max-width: 100%;">
+				<div class="modal-header" style="text-align: center;">
+					<h2 style="margin: 0;">Password Check</h2>
+				</div>
+				<div class="modal-body" style="background-color: inherit; margin: 0 25px;">
+					<div>
+						<div id="pwc-common" class="pwc-item pwc-req">
+							<i name="checkbox" class="far fa-square"></i><span>Not a common password</span>
+						</div>
+						<div id="pwc-length" class="pwc-item pwc-req">
+							<i name="checkbox" class="far fa-square"></i><span>At least 8 characters</span>
+						</div>
+						<div id="pwc-lower" class="pwc-item pwc-opt">
+							<i name="checkbox" class="far fa-square"></i><span>At least 2 lowercase letters</span>
+						</div>
+						<div id="pwc-upper" class="pwc-item pwc-opt">
+							<i name="checkbox" class="far fa-square"></i><span>At least 2 uppercase letters</span>
+						</div>
+						<div id="pwc-digit" class="pwc-item pwc-opt">
+							<i name="checkbox" class="far fa-square"></i><span>At least 2 digits</span>
+						</div>
+						<div id="pwc-special" class="pwc-item pwc-opt">
+							<i name="checkbox" class="far fa-square"></i><span>At least 2 special characters</span>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="link-button" id="pw-help">More information</button>
+				</div>
+			</div>
+		</div>
+
 		<div class="inp_group">
 			<label for="username">Username</label>
 			<input type="text" placeholder="Enter Username" name="inp" id="username" maxlength="32" required>
@@ -63,12 +96,14 @@
 		<div class="inp_group">
 			<label for="psw">Password</label>
 			<input type="password" placeholder="Enter Password" name="inp" id="psw" maxlength="128" required>
+			<div id="meter-container">
+				<div id="meter-bar"></div>
+			</div>
 			<div style="display: flex;">
 				<small style="display: inline-block;" class="warning_label" id="psw_info"><b></b></small>
 				<div style="margin: 0 5px 5px 20px; display: flex; justify-content: flex-end;" id="pw-buttons">
 					<i id="pw-show" class="fa fa-eye"></i>
 					<i id="pw-clear" class="fa fa-trash-alt"></i>
-					<i id="pw-help" class="fa fa-question"></i>
 				</div>
 			</div>
 		</div>

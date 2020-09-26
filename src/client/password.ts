@@ -4,7 +4,7 @@ import NBP = require("../../dist/script/nbp.min.js");
 
 NBP.init("mostcommon_100000", "../../res/", true);
 
-function count_classes(password: string): any {
+export function count_classes(password: string): any {
 	let capital: number = 0, lower: number = 0, digits: number = 0, symbols: number = 0;
 	for (let i = 0; i < password.length; i++) {
 		let char = password.charAt(i);

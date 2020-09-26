@@ -11,9 +11,9 @@ body {
 
 .input_area {
 	display: block;
-	margin-left: auto;
+	margin-left: 1em;
 	margin-right: auto;
-	width: 80%;
+	width: 70%;
 }
 
 .modal {
@@ -72,7 +72,7 @@ body {
 .modal-header {
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
-	padding: 8px 64px;
+	padding: 8px 32px;
 	background-color: #5cb85c;
 	color: white;
 }
@@ -91,6 +91,10 @@ body {
 	padding: 2px 32px;
 	background-color: white;
 	margin-top: 0;
+}
+
+.pwc-item > i {
+	cursor: default !important;
 }
 
 /* Add padding to containers */
@@ -159,6 +163,55 @@ hr {
 	opacity:1;
 }
 
+.pwc-item {
+	font-weight: bolder;
+	margin: 2px;
+}
+
+.pwc-item * {
+	display: inline-block;
+}
+
+.pwc-item i {
+	margin-right: 2px;
+}
+
+.pwc-req * {
+	color: orangered;
+}
+
+.pwc-opt * {
+	color: lightsalmon;
+}
+
+.pwc-satisfied span {
+	color: darkgray;
+	text-decoration: line-through;
+	font-weight: normal;
+}
+
+.pwc-satisfied i {
+	color: #00e500;
+}
+
+.link-button {
+	border: none;
+	background: none;
+	color: gray;
+	padding: 0;
+	margin: 0 auto 8px auto;
+	cursor: pointer;
+	display: block;
+}
+
+.link-button:hover {
+	text-decoration: underline;
+}
+
+.link-button:focus{
+	outline: none;
+}
+
 /* Add a blue text color to links */
 a {
 	color: dodgerblue;
@@ -182,4 +235,76 @@ a {
 	font-family: NudgeFlix, serif;
 	letter-spacing: 0.05em;
 	color: #484848;
+}
+
+#meter-container {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	margin: 0 auto 5px 0;
+	width: 100%;
+	height: 0.5em;
+
+	background: rgba(0, 0, 0, 0.1);
+}
+
+#meter-bar {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	height: 100%;
+}
+
+.meter-bar-0 {
+	background: none;
+}
+
+.meter-bar-1 {
+	width: 25%;
+	background: red;
+	animation-name: animatemeter-1;
+	animation-duration: 0.5s;
+}
+
+@keyframes animatemeter-1 {
+	from {width: 0; opacity: 0.5}
+	to {width: 25%; opacity: 1}
+}
+
+.meter-bar-2 {
+	width: 50%;
+	background: #ffbe00;
+	animation-name: animatemeter-2;
+	animation-duration: 0.5s;
+}
+
+@keyframes animatemeter-2 {
+	from {width: 25%; opacity: 0.5}
+	to {width: 50%; opacity: 1}
+}
+
+.meter-bar-3 {
+	width: 75%;
+	background: #77ec00;
+	animation-name: animatemeter-3;
+	animation-duration: 0.5s;
+}
+
+@keyframes animatemeter-3 {
+	from {width: 50%; opacity: 0.5}
+	to {width: 75%; opacity: 1}
+}
+
+.meter-bar-4 {
+	width: 100%;
+	background: #02a600;
+	animation-name: animatemeter-4;
+	animation-duration: 0.5s;
+}
+
+@keyframes animatemeter-4 {
+	from {width: 75%; opacity: 0.5}
+	to {width: 100%; opacity: 1}
 }

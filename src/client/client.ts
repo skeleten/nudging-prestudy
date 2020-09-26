@@ -1,8 +1,8 @@
 import { SaveMethod, ApiCallSaveMethod } from './methods';
-import { get_fast_metrics, get_full_metrics } from './password';
+import { count_classes, get_fast_metrics, get_full_metrics } from './password';
 
 class App {
-	saveMethod: SaveMethod;
+	saveMethod: ApiCallSaveMethod;
 
 	all_valid: boolean;
 	mail: HTMLInputElement;
@@ -11,6 +11,14 @@ class App {
 	show_password: HTMLInputElement;
 	clear_password: HTMLInputElement;
 	password_repeat: HTMLInputElement;
+	pw_meter_bar: HTMLElement;
+
+	pwc_common: HTMLDivElement;
+	pwc_length: HTMLDivElement;
+	pwc_lower: HTMLDivElement;
+	pwc_upper: HTMLDivElement;
+	pwc_digit: HTMLDivElement;
+	pwc_special: HTMLDivElement;
 
 	password_hidden: boolean;
 
@@ -27,6 +35,7 @@ class App {
 		this.show_password = <HTMLInputElement> document.getElementById('pw-show');
 		this.clear_password = <HTMLInputElement> document.getElementById('pw-clear');
 		this.password_repeat = <HTMLInputElement> document.getElementById('psw-repeat');
+		this.pw_meter_bar = <HTMLElement> document.getElementById('meter-bar');
 
 		this.mail.oninput = () => this.checkMail(this.mail.value);
 		this.mail.onkeyup = (e: KeyboardEvent) => this.submitOnEnter(e);
@@ -59,6 +68,13 @@ class App {
 			this.onSubmitClick(this.all_valid)
 		};
 
+		this.pwc_common = <HTMLDivElement> document.getElementById('pwc-common');
+		this.pwc_length = <HTMLDivElement> document.getElementById('pwc-length');
+		this.pwc_lower = <HTMLDivElement> document.getElementById('pwc-lower');
+		this.pwc_upper = <HTMLDivElement> document.getElementById('pwc-upper');
+		this.pwc_digit = <HTMLDivElement> document.getElementById('pwc-digit');
+		this.pwc_special = <HTMLDivElement> document.getElementById('pwc-special');
+
 		let closeExButton = <HTMLButtonElement> document.getElementById('close-explanation');
 		closeExButton.onclick = () => {
 			document.getElementById('explanation-popup').style.display = 'none';
@@ -66,6 +82,7 @@ class App {
 
 		let openExButton = <HTMLButtonElement> document.getElementById('pw-help');
 		openExButton.onclick = () => {
+			console.log('yolo');
 			document.getElementById('explanation-popup').style.display = 'block';
 		};
 
@@ -115,17 +132,48 @@ class App {
 	checkPassword(value: string) {
 		let valid: boolean = value.length >= 8;
 		let suggestion = '';
+		let blacklisted = false;
 		if (value.length < 32) {
 			let metrics = get_fast_metrics(value);
-			if (metrics.blacklisted) {
+			blacklisted = metrics.blacklisted;
+			if (blacklisted) {
 				suggestion = 'A lot of people use this password, please choose another one';
 				valid = false;
 			}
-		}
-		let warning = (<HTMLTextAreaElement> document.getElementById('psw_info'));
-		warning.style.color = !valid ? '#e31400' : '#18d546';
-		warning.innerHTML = !valid ? (suggestion != '' ? suggestion : 'Password must be 8 characters or longer') : '';
+			if (valid) this.pw_meter_bar.className = "meter-bar-" + metrics.score;
+			else this.pw_meter_bar.className = "meter-bar-0";
+		} else this.pw_meter_bar.className = "meter-bar-4";
+
+		this.updateChecklist(value, blacklisted);
 		this.all_valid = valid ? this.all_valid : false;
+	}
+
+	updateChecklist(password: string, blacklisted: boolean) {
+		let classes = count_classes(password);
+
+		if (!blacklisted && password) this.pwc_common.classList.add('pwc-satisfied');
+		else this.pwc_common.classList.remove('pwc-satisfied');
+
+		if (password.length >= 8) this.pwc_length.classList.add('pwc-satisfied');
+		else this.pwc_length.classList.remove('pwc-satisfied');
+
+		if (classes.lower >= 2) this.pwc_lower.classList.add('pwc-satisfied');
+		else this.pwc_lower.classList.remove('pwc-satisfied');
+
+		if (classes.capital >= 2) this.pwc_upper.classList.add('pwc-satisfied');
+		else this.pwc_upper.classList.remove('pwc-satisfied');
+
+		if (classes.digit >= 2) this.pwc_digit.classList.add('pwc-satisfied');
+		else this.pwc_digit.classList.remove('pwc-satisfied');
+
+		if (classes.symbol >= 2) this.pwc_special.classList.add('pwc-satisfied');
+		else this.pwc_special.classList.remove('pwc-satisfied');
+
+		let boxes = document.getElementsByClassName('pwc-item');
+		for (let i = 0; i < boxes.length; i++) boxes.item(i).children.namedItem('checkbox').classList.replace('fa-check-square', 'fa-square');
+
+		let check = document.getElementsByClassName('pwc-satisfied');
+		for (let i = 0; i < check.length; i++) check.item(i).children.namedItem('checkbox').classList.replace('fa-square', 'fa-check-square');
 	}
 
 	checkPWConfirm(value: string, compare_to: string) {
@@ -145,13 +193,14 @@ class App {
 		let payload =
 			{
 				// TODO timings
-				nudge_id: -1,
+				nudge_id: 1,
 				username: username_enc,
 				mail: mail_enc,
 				metrics: get_full_metrics(this.password.value),
 			};
-		this.saveMethod.save(payload);
-		window.location.href = "/en/success";
+		this.saveMethod.save(payload, () => {
+			window.location.href = "../success";
+		});
 	}
 }
 

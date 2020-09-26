@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>NudgeFlix Registration</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<link rel="stylesheet" type="text/css" href="/css/form.css">
+	<!--script type="text/javascript" src="/script/zxcvbn.js" ></script-->
+	<!-- <\!-- hack because ts bugs -\-> -->
+	<!-- <script>var exports={};</script> -->
+	<script src="../../script/client.js"></script>
+</head>
+<body>
+<div class="input_area">
+	<div id="explanation-popup" class="modal" style="display: none;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 style="margin: 0;">Creating secure passwords</h2>
+			</div>
+			<div class="modal-body center" style="background-color: inherit; margin-top: 0;">
+				<h3>Creating secure passwords isn't hard.</h3>
+				<p>It's easy once you understand how passwords are broken. Services actually store a <i>fingerprint</i> that
+					can only be created using your password. Attackers try to guess your password until they can create the
+					same fingerprint, that's when they know they guessed correctly.</p>
+				<p>To make guessing easier, they try common passwords, mixed with common alterations like numbers and symbols
+					in position's you're likely to choose. An example would be <i>Password1!</i>.</p>
+				<p>We can make guessing harder by choosing passwords with numbers and special characters that are not at
+					the end of the password, and by avoiding words found in a dictionary.</p>
+				<p>To help you with remembering those passwords, you could use one of many free password managers or
+					use methods designed to aid your memory. An example:</p>
+				<p>Create a sentence containing numbers and punctuation. For our example, we'll choose</p>
+				<p><b>I like walking my 2 dogs, they always play fetch with me and my friends!</b></p>
+				<p>Then we take the first character or the first few characters of every word and take every number and
+					punctuation, and create our new password from that:</p>
+				<p><b>Ilwm2d,tapfwmamf!</b></p>
+				<p>There we have our password, it's long and hard to guess, but as long as we remember the sentence,
+					we will be able to derive the password again. We could of course improve it by using more capital letters
+					and uncommon punctuation.</p>
+				<p>Get creative! Make your passwords hard to guess and easy to remember, and seriously think about using
+					a password manager to keep track of your logins. Thank you for taking the time to read this.</p>
+			</div>
+			<div class="modal-footer">
+				<button class="modal-button" id="close-explanation">I understand.</button>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<img src="../../res/logo_full_light.png" alt="NudgeFlix Logo" width="256" height="256" class="center">
+		<p style="text-align:center" class="nf-font">Create your new NudgeFlix account here!</p>
+
+		<hr>
+		<div class="inp_group">
+			<label for="email">Email</label>
+			<input type="text" placeholder="Enter Email" name="inp" id="email" maxlength="64" required>
+			<small class="warning_label" id="mail_info"><b>Error.</b></small>
+		</div>
+
+		<div class="inp_group">
+			<label for="username">Username</label>
+			<input type="text" placeholder="Enter Username" name="inp" id="username" maxlength="32" required>
+			<small class="warning_label" id="username_info"><b>Error.</b></small>
+		</div>
+
+		<div class="inp_group">
+			<label for="psw">Password</label>
+			<input type="password" placeholder="Enter Password" name="inp" id="psw" maxlength="128" required>
+			<div style="display: flex;">
+				<small style="display: inline-block;" class="warning_label" id="psw_info"><b></b></small>
+				<div style="margin: 0 5px 5px 20px; display: flex; justify-content: flex-end;" id="pw-buttons">
+					<i id="pw-show" class="fa fa-eye"></i>
+					<i id="pw-clear" class="fa fa-trash-alt"></i>
+					<i id="pw-help" class="fa fa-question"></i>
+				</div>
+			</div>
+		</div>
+
+		<div class="inp_group">
+			<label for="psw-repeat">Repeat Password</label>
+			<input type="password" placeholder="Repeat Password" name="inp" id="psw-repeat" maxlength="128" required>
+			<small class="warning_label" id="psw_rpt_info"><b>Error.</b></small>
+		</div>
+		<hr>
+
+		<p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+		<button class="registerbtn" id="submit_btn">Register</button>
+		<div class="signin">
+			<p>Already have an account? <a href="#">Sign in</a>.</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

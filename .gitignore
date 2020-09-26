@@ -1,0 +1,7 @@
+/.idea/
+**/*.js
+**/*.js.map
+**/nodemon.json
+**/node_modules
+!**/pwgen.js
+!**/nbp.min.js

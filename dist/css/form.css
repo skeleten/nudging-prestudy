@@ -11,9 +11,9 @@ body {
 
 .input_area {
 	display: block;
-	margin-left: auto;
+	margin-left: 1em;
 	margin-right: auto;
-	width: 80%;
+	width: 70%;
 }
 
 .modal {
@@ -182,4 +182,13 @@ a {
 	font-family: NudgeFlix, serif;
 	letter-spacing: 0.05em;
 	color: #484848;
+}
+
+#chart {
+	height: 30%;
+	width: 30%;
+	position: absolute;
+	right: 0;
+	margin: 0;
+	padding: 2em;
 }

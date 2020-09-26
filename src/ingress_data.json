@@ -12,3 +12,4 @@
 {"metrics":{"length":17,"classes":{"lower":17,"capital":0,"digit":0,"symbol":0},"guesses":23128000010000,"score":4,"hash":"320ac1fdf024412db49a1b21fafa37a5211721fcfe715cbef8f10a7187a54c84"}}
 {"username":"a","mail":"@","metrics":{"length":109,"classes":{"lower":67,"capital":3,"digit":0,"symbol":39},"guesses":9.553747505702399e+83,"score":4,"hash":"f6b3b6f4a041a961ca5402034d6ae5318113113f118ec7dd580f9fd1e8a68fba"}}
 {"username":"a","mail":"@"}
+{"date":"2020-06-28T12:09:13.325Z","payload":{"nudge_id":-1,"username":"YQ==","mail":"YUBhLmE=","metrics":{"length":8,"classes":{"lower":0,"capital":0,"digit":0,"symbol":8},"blacklisted":false,"guesses":97,"score":0,"hash":"731f5f3e95b2d6edda3811a4bc5fefa76e9621da69487e057b36664f14fa0330"}}}

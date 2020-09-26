@@ -7,6 +7,9 @@
 		"sourceMap": true,
 		"target": "es5"
 	},
+	"optimization": {
+		"minimize": false
+	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules", "**/*.spec.ts"]
 }

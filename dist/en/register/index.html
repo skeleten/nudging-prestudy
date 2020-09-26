@@ -3,7 +3,7 @@
 	<meta charset="UTF-8">
 	<title>NudgeFlix Registration</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-	<link rel="stylesheet" type="text/css" href="/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../../css/form.css">
 	<!--script type="text/javascript" src="/script/zxcvbn.js" ></script-->
 	<!-- <\!-- hack because ts bugs -\-> -->
 	<!-- <script>var exports={};</script> -->
@@ -48,6 +48,11 @@
 		<p style="text-align:center" class="nf-font">Create your new NudgeFlix account here!</p>
 
 		<hr>
+
+		<div id="chart">
+			<canvas id="radarChart" width="400px" height="400px"></canvas>
+		</div>
+
 		<div class="inp_group">
 			<label for="email">Email</label>
 			<input type="text" placeholder="Enter Email" name="inp" id="email" maxlength="64" required>

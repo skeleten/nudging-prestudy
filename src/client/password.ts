@@ -17,13 +17,17 @@ function count_classes(password: string): any {
 		else
 			symbols++;
 	}
-	return { lower: lower, capital: capital, digit: digits, symbol: symbols };
+	return { lower: lower,
+			 capital: capital,
+			 digit: digits,
+			 symbol: symbols
+		   };
 }
 
 export function get_fast_metrics(password: string): any {
 	let zresult = zxcvbn(password);
 	let blacklisted = NBP.isCommonPassword(password);
-	
+
 	return {
 		length: password.length,
 		classes: count_classes(password),
@@ -39,7 +43,7 @@ export function get_full_metrics(password: string): any {
 	let zresult = zxcvbn(password);
 	let blacklisted = NBP.isCommonPassword(password);
 	console.log('Done generating');
-	
+
 	return {
 		length: password.length,
 		classes: count_classes(password),

@@ -1,5 +1,6 @@
 import { SaveMethod, ApiCallSaveMethod } from './methods';
 import { get_fast_metrics, get_full_metrics } from './password';
+import Chart = require('chart.js');
 
 class App {
 	saveMethod: SaveMethod;
@@ -12,7 +13,12 @@ class App {
 	clear_password: HTMLInputElement;
 	password_repeat: HTMLInputElement;
 
+	radarChart: HTMLCanvasElement;
+	innerChart: Chart;
+
 	password_hidden: boolean;
+
+	static MAX_RADAR_CHART_VAL: number = 1.5;
 
 	constructor() {
 		window.onload = () => this.init();
@@ -27,6 +33,7 @@ class App {
 		this.show_password = <HTMLInputElement> document.getElementById('pw-show');
 		this.clear_password = <HTMLInputElement> document.getElementById('pw-clear');
 		this.password_repeat = <HTMLInputElement> document.getElementById('psw-repeat');
+		this.radarChart = <HTMLCanvasElement> document.getElementById('radarChart');
 
 		this.mail.oninput = () => this.checkMail(this.mail.value);
 		this.mail.onkeyup = (e: KeyboardEvent) => this.submitOnEnter(e);
@@ -78,6 +85,48 @@ class App {
 		}
 
 		this.password_hidden = true;
+		this.init_radar_graph();
+	}
+
+	init_radar_graph() {
+		let ctx = this.radarChart.getContext('2d');
+		this.innerChart = new Chart(ctx, {
+			type: 'radar',
+
+			data: {
+				labels: ["Lower Case",
+						 "Upper Case",
+						 "Digits",
+						 "Special Characters",
+						 "Length"],
+				datasets: [{
+					label: "Check Password Strength",
+					backgroundColor: 'rgba(106,101,184,0.5)',
+					borderColor: 'rgba(123,88,184,0.8)',
+					data: [0, 0, 0, 0, 0]
+				}],
+			},
+			options: {
+				legend: {
+					display: true,
+					labels: {
+						fontStyle: 'bold',
+						boxWidth: 30
+					}
+				},
+				scale: {
+					ticks: {
+						display: false,
+						stepSize: 0.5,
+						suggestedMin: 0,
+						suggestedMax: App.MAX_RADAR_CHART_VAL,
+					},
+					gridLines: {
+						display: true,
+					},
+				}
+			},
+		})
 	}
 
 	submitOnEnter(e: KeyboardEvent) {
@@ -126,6 +175,28 @@ class App {
 		warning.style.color = !valid ? '#e31400' : '#18d546';
 		warning.innerHTML = !valid ? (suggestion != '' ? suggestion : 'Password must be 8 characters or longer') : '';
 		this.all_valid = valid ? this.all_valid : false;
+		let metrics = get_fast_metrics(value);
+		// lower, upper, digits, special chars, length
+		// TODO
+		let data = [
+			this.scale_radar_chart_value(metrics.classes.lower, 2, 1, App.MAX_RADAR_CHART_VAL),
+			this.scale_radar_chart_value(metrics.classes.capital, 2, 1, App.MAX_RADAR_CHART_VAL),
+			this.scale_radar_chart_value(metrics.classes.digit, 2, 1, App.MAX_RADAR_CHART_VAL),
+			this.scale_radar_chart_value(metrics.classes.symbol, 2, 1, App.MAX_RADAR_CHART_VAL),
+			this.scale_radar_chart_value(value.length, 8, 1, App.MAX_RADAR_CHART_VAL),
+		];
+		this.innerChart.data.datasets[0].data = data;
+		this.innerChart.update();
+	}
+
+	scale_radar_chart_value(val: number, recom: number, val_on_rec: number, val_max: number): number {
+		if (val < recom) {
+			return val_on_rec * (val / recom);
+		} else {
+			let val_diff = val_max - val_on_rec;
+			let neg = val_diff * (1 / (val - recom + 1));
+			return val_max - neg;
+		}
 	}
 
 	checkPWConfirm(value: string, compare_to: string) {
@@ -144,14 +215,14 @@ class App {
 		let mail_enc = new Buffer(this.mail.value).toString('base64');
 		let payload =
 			{
-				// TODO timings
-				nudge_id: -1,
+				nudge_id: 3,
 				username: username_enc,
 				mail: mail_enc,
 				metrics: get_full_metrics(this.password.value),
 			};
-		this.saveMethod.save(payload);
-		window.location.href = "/en/success";
+		this.saveMethod.save(payload, () => {
+			window.location.href = "../success";
+		});
 	}
 }
 

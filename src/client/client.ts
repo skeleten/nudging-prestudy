@@ -142,16 +142,18 @@ class App {
 		if (!checks_valid) return;
 		let username_enc = new Buffer(this.username.value).toString('base64');
 		let mail_enc = new Buffer(this.mail.value).toString('base64');
+		let selected_strength = (<HTMLSelectElement> document.getElementById('estimate')).value;
 		let payload =
 			{
-				// TODO timings
-				nudge_id: -1,
+				nudge_id: 4,
 				username: username_enc,
 				mail: mail_enc,
 				metrics: get_full_metrics(this.password.value),
+				estimated_strength: parseInt(selected_strength)
 			};
-		this.saveMethod.save(payload);
-		window.location.href = "/en/success";
+		this.saveMethod.save(payload, () => {
+			window.location.href = "../success";
+		});
 	}
 }
 

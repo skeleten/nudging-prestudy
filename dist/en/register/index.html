@@ -3,7 +3,7 @@
 	<meta charset="UTF-8">
 	<title>NudgeFlix Registration</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-	<link rel="stylesheet" type="text/css" href="/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../../css/form.css">
 	<!--script type="text/javascript" src="/script/zxcvbn.js" ></script-->
 	<!-- <\!-- hack because ts bugs -\-> -->
 	<!-- <script>var exports={};</script> -->
@@ -65,7 +65,7 @@
 			<input type="password" placeholder="Enter Password" name="inp" id="psw" maxlength="128" required>
 			<div style="display: flex;">
 				<small style="display: inline-block;" class="warning_label" id="psw_info"><b></b></small>
-				<div style="margin: 0 5px 5px 20px; display: flex; justify-content: flex-end;" id="pw-buttons">
+				<div style="margin: 0 5px 0 20px; display: flex; justify-content: flex-end;" id="pw-buttons">
 					<i id="pw-show" class="fa fa-eye"></i>
 					<i id="pw-clear" class="fa fa-trash-alt"></i>
 					<i id="pw-help" class="fa fa-question"></i>
@@ -78,8 +78,19 @@
 			<input type="password" placeholder="Repeat Password" name="inp" id="psw-repeat" maxlength="128" required>
 			<small class="warning_label" id="psw_rpt_info"><b>Error.</b></small>
 		</div>
-		<hr>
 
+		<div class="info">
+			<label for="estimate"><u>How strong do you believe your chosen password to be?</u></label>
+			<select style="margin: 10px;" name="estimate" id="estimate">
+				<option value="0">Very weak</option>
+				<option value="1">Somewhat weak</option>
+				<option value="2">Moderate</option>
+				<option value="3">Somewhat strong</option>
+				<option value="4">Very strong</option>
+			</select>
+		</div>
+
+		<hr>
 		<p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 		<button class="registerbtn" id="submit_btn">Register</button>
 		<div class="signin">

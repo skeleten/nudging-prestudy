@@ -113,6 +113,18 @@ label {
 	display: none;
 }
 
+.info {
+	border-radius: 5px;
+	border: 2px solid #0074ff;
+	background: rgba(0, 95, 255, 0.56);
+	padding: 0 20px 0 20px;
+	color: #ffffff;
+	display: none;
+	margin: 20px auto 20px auto;
+	text-align: center;
+	width: 75%;
+}
+
 i {
 	margin: 0 0 0 0;
 	color: #494949;

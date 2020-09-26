@@ -3,7 +3,7 @@
 	<meta charset="UTF-8">
 	<title>NudgeFlix Registration</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-	<link rel="stylesheet" type="text/css" href="/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../../css/form.css">
 	<!--script type="text/javascript" src="/script/zxcvbn.js" ></script-->
 	<!-- <\!-- hack because ts bugs -\-> -->
 	<!-- <script>var exports={};</script> -->
@@ -61,12 +61,20 @@
 		</div>
 
 		<div class="inp_group">
+			<div class="info" id="gen-info">
+				<h3>We have chosen a password for you that complies with our password security policy</h3>
+				<p>
+					This password has been generated on your machine and was never sent over the internet.<br/>
+					You are, of course, welcome to replace it with your own choice of password.
+				</p>
+			</div>
 			<label for="psw">Password</label>
 			<input type="password" placeholder="Enter Password" name="inp" id="psw" maxlength="128" required>
 			<div style="display: flex;">
 				<small style="display: inline-block;" class="warning_label" id="psw_info"><b></b></small>
-				<div style="margin: 0 5px 5px 20px; display: flex; justify-content: flex-end;" id="pw-buttons">
+				<div style="margin: 5px 5px 5px 20px; display: flex; justify-content: flex-end;" id="pw-buttons">
 					<i id="pw-show" class="fa fa-eye"></i>
+					<i id="pw-regenerate" class="fa fa-sync-alt"></i>
 					<i id="pw-clear" class="fa fa-trash-alt"></i>
 					<i id="pw-help" class="fa fa-question"></i>
 				</div>

@@ -1,5 +1,5 @@
 export interface SaveMethod {
-    save(obj: any): void;
+    save(obj: any, callback: () => void): void;
 }
 
 export class ApiCallSaveMethod {
@@ -9,7 +9,7 @@ export class ApiCallSaveMethod {
         this.backend_uri = uri;
     }
 
-    async save(obj: any) {
+    async save(obj: any, callback: () => void) {
 		let payload = JSON.stringify(obj);
 		let xhr = new XMLHttpRequest();
 		xhr.open('POST', this.backend_uri);
@@ -17,6 +17,8 @@ export class ApiCallSaveMethod {
 		xhr.onload = () => {
 			if (xhr.status !== 200) {
 				console.error('Something went wrong: ' + xhr.status + ' ' + xhr.statusText);
+			} else {
+				callback();
 			}
 		};
 		xhr.send(payload);

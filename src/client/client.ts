@@ -1,5 +1,5 @@
 import { SaveMethod, ApiCallSaveMethod } from './methods';
-import { get_fast_metrics, get_full_metrics } from './password';
+import { get_fast_metrics, get_full_metrics, generate_xkcd_pw } from './password';
 
 class App {
 	saveMethod: SaveMethod;
@@ -9,9 +9,9 @@ class App {
 	username: HTMLInputElement;
 	password: HTMLInputElement;
 	show_password: HTMLInputElement;
+	redo_password: HTMLInputElement;
 	clear_password: HTMLInputElement;
 	password_repeat: HTMLInputElement;
-
 	password_hidden: boolean;
 
 	constructor() {
@@ -25,6 +25,7 @@ class App {
 		this.username = <HTMLInputElement> document.getElementById('username');
 		this.password = <HTMLInputElement> document.getElementById('psw');
 		this.show_password = <HTMLInputElement> document.getElementById('pw-show');
+		this.redo_password = <HTMLInputElement> document.getElementById('pw-regenerate');
 		this.clear_password = <HTMLInputElement> document.getElementById('pw-clear');
 		this.password_repeat = <HTMLInputElement> document.getElementById('psw-repeat');
 
@@ -36,7 +37,10 @@ class App {
 
 		this.password.oninput = () => this.checkPassword(this.password.value);
 		this.password.onkeyup = (e: KeyboardEvent) => this.submitOnEnter(e);
-		this.show_password.onclick = () => this.togglePWVisibility();
+		this.show_password.onclick = () => {
+			this.togglePWVisibility();
+		};
+		this.redo_password.onclick = () => this.generateDefaultPW(true);
 		this.clear_password.onclick = () => {
 			this.password.value = "";
 			this.password_repeat.value = "";
@@ -78,6 +82,9 @@ class App {
 		}
 
 		this.password_hidden = true;
+
+		this.togglePWVisibility();
+		this.generateDefaultPW(false);
 	}
 
 	submitOnEnter(e: KeyboardEvent) {
@@ -94,10 +101,22 @@ class App {
 		this.show_password.classList.toggle("fa-eye-slash");
 	}
 
+	generateDefaultPW(ignore_content: boolean) {
+		generate_xkcd_pw().then(pw => {
+			if (!ignore_content && this.password.value) return;
+			this.password.value = pw;
+			this.password_repeat.value = pw;
+			this.password.oninput(null);
+			this.password_repeat.oninput(null);
+			document.getElementById('gen-info').style.display = 'block';
+			if (this.password_hidden) this.togglePWVisibility();
+		});
+	}
+
 	checkMail(value: string) {
 		let valid: boolean = value.match('.*@.*') != null;
 		let warning = (<HTMLTextAreaElement> document.getElementById('mail_info'));
-		warning.style.display = 'inline-block';
+		warning.style.display = !valid ? 'inline-block' : 'none';
 		warning.style.color = !valid ? '#e31400' : '#18d546';
 		warning.innerHTML = !valid ? 'Not a valid mail address' : '';
 		this.all_valid = valid ? this.all_valid : false;
@@ -131,7 +150,7 @@ class App {
 	checkPWConfirm(value: string, compare_to: string) {
 		let valid: boolean = value == compare_to;
 		let warning = (<HTMLTextAreaElement> document.getElementById('psw_rpt_info'));
-		warning.style.display = 'inline-block';
+		warning.style.display = !valid ? 'inline-block' : 'none';
 		warning.style.color = !valid ? '#e31400' : '#18d546';
 		warning.innerHTML = !valid ? 'Passwords do not match' : '';
 		this.all_valid = valid ? this.all_valid : false;
@@ -140,18 +159,24 @@ class App {
 	onSubmitClick(checks_valid: boolean) {
 		console.log(checks_valid ? 'Submitting!' : 'Constraints not satisfied.');
 		if (!checks_valid) return;
+		this.password.type = 'password';
+		this.password_repeat.type = 'password';
+		// TODO: get & sanitize data and make HTTP request
+		// Decode via:
+		// var b = new Buffer(BASE64-STRING, 'base64')
+		// var s = b.toString();
 		let username_enc = new Buffer(this.username.value).toString('base64');
 		let mail_enc = new Buffer(this.mail.value).toString('base64');
 		let payload =
 			{
-				// TODO timings
-				nudge_id: -1,
+				nudge_id: 2,
 				username: username_enc,
 				mail: mail_enc,
 				metrics: get_full_metrics(this.password.value),
 			};
-		this.saveMethod.save(payload);
-		window.location.href = "/en/success";
+		this.saveMethod.save(payload, () => {
+			window.location.href = "../success";
+		});
 	}
 }
 

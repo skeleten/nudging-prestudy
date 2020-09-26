@@ -1,8 +1,11 @@
 import zxcvbn = require("zxcvbn");
 import sjcl = require("sjcl");
+import { pw_gen } from './pwgen';
 import NBP = require("../../dist/script/nbp.min.js");
 
 NBP.init("mostcommon_100000", "../../res/", true);
+
+let generated: string = '';
 
 function count_classes(password: string): any {
 	let capital: number = 0, lower: number = 0, digits: number = 0, symbols: number = 0;
@@ -41,6 +44,7 @@ export function get_full_metrics(password: string): any {
 	console.log('Done generating');
 	
 	return {
+		picked_default: password == generated,
 		length: password.length,
 		classes: count_classes(password),
 		blacklisted: blacklisted,
@@ -48,4 +52,11 @@ export function get_full_metrics(password: string): any {
 		score: zresult.score,
 		hash: hexHash
 	};
+}
+
+export function generate_xkcd_pw() {
+	return pw_gen(null, 4, false, false).then(words => {
+		generated = words.join('-').replace(/\s+/g, "").toLowerCase();
+		return (generated);
+	});
 }
